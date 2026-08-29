@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Power of Education UG — Notes Library</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@600;700&family=Hind:wght@400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{--paper:#EDE6D6;--card:#FBF7EC;--ink:#241F17;--rust:#A8462F;--olive:#5C6B4A;--line:#c9bfa4;--green:#6B7F52;}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{background:var(--paper);color:var(--ink);font-family:'Hind',sans-serif;}
+a{text-decoration:none;color:inherit;}
+section{padding:64px 6vw;}
+
+/* nav */
+.nav{display:flex;align-items:center;justify-content:space-between;padding:16px 6vw;border-bottom:2px solid var(--ink);position:sticky;top:0;background:var(--paper);z-index:20;}
+.brand{font-family:'Fraunces',serif;font-weight:700;font-size:1.15rem;}
+.brand span{display:block;font-family:'Space Mono',monospace;font-size:0.55rem;letter-spacing:2px;color:var(--rust);text-transform:uppercase;margin-top:2px;}
+.nav-mid{flex:1;max-width:400px;margin:0 30px;display:flex;align-items:center;background:var(--card);border:1px solid var(--line);padding:9px 14px;gap:8px;}
+.nav-mid input{background:none;border:none;outline:none;color:var(--ink);font-size:0.85rem;flex:1;font-family:'Hind',sans-serif;}
+.nav-mid input::placeholder{color:rgba(36,31,23,0.4);}
+.nav-links{display:flex;gap:28px;align-items:center;font-size:0.9rem;}
+.nav-cta{border:1.5px solid var(--ink);padding:8px 16px;font-weight:600;}
+@media(max-width:900px){.nav-mid{display:none;}.nav-links a:not(.nav-cta){display:none;}}
+
+/* hero */
+.hero{display:grid;grid-template-columns:1fr 1fr;gap:50px;align-items:center;min-height:500px;}
+.drawer-label{font-family:'Space Mono',monospace;font-size:0.72rem;letter-spacing:2px;color:var(--rust);text-transform:uppercase;margin-bottom:18px;}
+h1{font-family:'Fraunces',serif;font-weight:700;font-size:clamp(2rem,4.2vw,3.2rem);line-height:1.12;margin-bottom:20px;}
+h1 em{font-style:italic;color:var(--rust);}
+.sub{font-size:1.03rem;line-height:1.65;opacity:0.85;max-width:480px;margin-bottom:26px;}
+.cta-row{display:flex;gap:14px;flex-wrap:wrap;}
+.btn-primary{background:var(--ink);color:var(--card);font-weight:600;padding:14px 26px;}
+.btn-outline{border:1.5px solid var(--ink);padding:14px 24px;font-weight:600;}
+
+.drawer{position:relative;perspective:1000px;}
+.card-stack{position:relative;height:340px;}
+.index-card{position:absolute;width:270px;background:var(--card);border:1px solid var(--line);box-shadow:0 12px 28px rgba(36,31,23,0.18);padding:18px;font-family:'Space Mono',monospace;}
+.index-card::before{content:"";position:absolute;top:32px;left:0;right:0;height:1px;background:var(--line);}
+.index-card::after{content:"";position:absolute;top:0;bottom:0;left:24px;width:1px;background:rgba(168,70,47,0.25);}
+.index-card .tab{position:absolute;top:-14px;left:16px;background:var(--rust);color:var(--card);font-size:0.58rem;padding:4px 10px;letter-spacing:1px;}
+.index-card h4{font-family:'Fraunces',serif;font-size:0.95rem;margin-top:18px;margin-bottom:6px;}
+.index-card p{font-size:0.62rem;line-height:1.55;opacity:0.75;margin-bottom:8px;}
+.index-card .meta{font-size:0.6rem;opacity:0.6;display:flex;justify-content:space-between;}
+.c1{top:0;left:0;transform:rotate(-6deg);z-index:1;}
+.c2{top:18px;left:36px;transform:rotate(2deg);z-index:2;}
+.c3{top:44px;left:72px;transform:rotate(-2deg);z-index:3;}
+@media(max-width:640px){.hero{grid-template-columns:1fr;}.card-stack{margin:0 auto;}.index-card{width:85vw;max-width:270px;}}
+
+.section-head{text-align:center;margin-bottom:40px;}
+.section-head .tag{font-family:'Space Mono',monospace;font-size:0.7rem;color:var(--rust);letter-spacing:2px;text-transform:uppercase;}
+.section-head h2{font-family:'Fraunces',serif;font-size:clamp(1.5rem,3vw,2.1rem);margin-top:8px;}
+.filters{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin-top:20px;}
+.filter-chip{font-family:'Space Mono',monospace;font-size:0.7rem;border:1px solid var(--line);padding:7px 14px;border-radius:20px;opacity:0.75;}
+.filter-chip.active{background:var(--ink);color:var(--card);border-color:var(--ink);opacity:1;font-weight:700;}
+
+/* catalog grid */
+.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:22px;padding-top:10px;}
+@media(max-width:1100px){.grid{grid-template-columns:repeat(3,1fr);}}
+@media(max-width:800px){.grid{grid-template-columns:1fr 1fr;}}
+@media(max-width:520px){.grid{gap:14px;}}
+
+.book-card{background:var(--card);border:1px solid var(--line);border-radius:2px;overflow:hidden;display:flex;flex-direction:column;transition:transform .15s, box-shadow .15s;}
+.book-card:hover{transform:translateY(-4px);box-shadow:0 14px 24px rgba(36,31,23,0.14);}
+.cover{position:relative;aspect-ratio:3/4;display:flex;flex-direction:column;justify-content:space-between;padding:16px;color:var(--card);}
+.cover .code{font-family:'Space Mono',monospace;font-size:0.6rem;letter-spacing:1px;opacity:0.85;}
+.cover .subj{font-family:'Fraunces',serif;font-weight:700;font-size:1.02rem;line-height:1.22;}
+.cover .faculty{font-family:'Space Mono',monospace;font-size:0.56rem;opacity:0.8;}
+.flags{position:absolute;top:10px;right:10px;display:flex;flex-direction:column;gap:5px;align-items:flex-end;}
+.flag{font-family:'Space Mono',monospace;font-size:0.54rem;letter-spacing:0.5px;padding:3px 8px;border-radius:2px;font-weight:700;}
+.flag.new{background:var(--rust);color:var(--card);}
+.flag.pyq{background:var(--olive);color:var(--card);}
+.flag.combo{background:var(--ink);color:var(--card);}
+.flag.free{background:var(--green);color:var(--card);}
+
+.c1 .cover{background:linear-gradient(155deg,#A8462F,#7c3323);}
+.c2 .cover{background:linear-gradient(155deg,#5C6B4A,#404b34);}
+.c3 .cover{background:linear-gradient(155deg,#7a5a3a,#54402a);}
+.c4 .cover{background:linear-gradient(155deg,#3f4f45,#2b352e);}
+
+.info{padding:14px 16px 16px;}
+.info h4{font-family:'Fraunces',serif;font-size:0.9rem;line-height:1.3;margin-bottom:4px;min-height:2.4em;}
+.info .author{font-family:'Space Mono',monospace;font-size:0.65rem;opacity:0.6;margin-bottom:9px;}
+.stars{color:var(--rust);font-size:0.68rem;margin-bottom:9px;letter-spacing:1px;}
+.stars span{opacity:0.25;}
+.price-row{margin-bottom:12px;}
+.price{font-family:'Space Mono',monospace;font-weight:700;font-size:0.92rem;color:var(--rust);}
+.price s{opacity:0.4;font-weight:400;font-size:0.76rem;margin-right:5px;color:var(--ink);}
+.actions{display:flex;gap:8px;}
+.btn-view{flex:1;text-align:center;background:var(--ink);color:var(--card);font-weight:700;font-size:0.76rem;padding:9px 0;}
+.btn-icon{width:33px;height:33px;border:1px solid var(--line);display:flex;align-items:center;justify-content:center;font-size:0.85rem;opacity:0.75;}
+
+/* combo */
+.combo{background:var(--ink);color:var(--card);padding:38px 34px;display:flex;justify-content:space-between;align-items:center;gap:30px;flex-wrap:wrap;}
+.combo h3{font-family:'Fraunces',serif;font-size:1.35rem;margin-bottom:8px;}
+.combo p{opacity:0.75;font-size:0.9rem;max-width:420px;}
+.combo .price{font-family:'Space Mono',monospace;font-size:1.7rem;font-weight:700;color:var(--card);}
+.combo .price s{font-size:1rem;opacity:0.5;margin-right:8px;}
+.combo .btn-primary{background:var(--rust);color:var(--card);}
+
+/* trust banner */
+.banner{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;padding:44px 6vw;border-top:1px solid var(--line);}
+.banner-item{display:flex;gap:14px;align-items:center;}
+.banner-item .ic{width:42px;height:42px;border-radius:50%;background:var(--card);border:1px solid var(--rust);display:flex;align-items:center;justify-content:center;color:var(--rust);font-size:1.05rem;flex-shrink:0;}
+.banner-item h5{font-family:'Fraunces',serif;font-size:0.9rem;margin-bottom:3px;}
+.banner-item p{font-size:0.76rem;opacity:0.65;}
+@media(max-width:800px){.banner{grid-template-columns:1fr;}}
+
+/* PYQ folder browser */
+#pyq{border-top:1px solid var(--line);}
+.pyq-shell{background:var(--card);border:1px solid var(--line);}
+.pyq-toolbar{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:16px 20px;border-bottom:1px solid var(--line);flex-wrap:wrap;}
+.pyq-crumbs{display:flex;align-items:center;flex-wrap:wrap;gap:4px;font-family:'Space Mono',monospace;font-size:0.78rem;}
+.pyq-crumbs .crumb{opacity:0.6;cursor:pointer;padding:3px 6px;}
+.pyq-crumbs .crumb:last-child{opacity:1;font-weight:700;color:var(--rust);}
+.pyq-crumbs .crumb:hover{text-decoration:underline;opacity:1;}
+.pyq-crumbs .sep{opacity:0.4;}
+.pyq-back{font-family:'Space Mono',monospace;font-size:0.72rem;border:1px solid var(--ink);padding:7px 12px;opacity:0.85;flex-shrink:0;}
+.pyq-back:hover{opacity:1;background:var(--ink);color:var(--card);}
+.pyq-body{padding:22px 20px 28px;}
+.pyq-folder-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;}
+@media(max-width:1000px){.pyq-folder-grid{grid-template-columns:repeat(3,1fr);}}
+@media(max-width:700px){.pyq-folder-grid{grid-template-columns:repeat(2,1fr);}}
+@media(max-width:440px){.pyq-folder-grid{grid-template-columns:1fr;}}
+.pyq-folder{display:flex;align-items:center;gap:10px;background:var(--paper);border:1px solid var(--line);padding:14px;cursor:pointer;font-size:0.85rem;font-weight:600;text-align:left;}
+.pyq-folder:hover{border-color:var(--rust);background:#f2ecdd;}
+.pyq-folder .ico{font-size:1.15rem;color:var(--olive);flex-shrink:0;}
+.pyq-folder .count{display:block;font-family:'Space Mono',monospace;font-size:0.62rem;font-weight:400;opacity:0.55;margin-top:2px;}
+.pyq-file-list{display:flex;flex-direction:column;gap:10px;}
+.pyq-file{display:flex;align-items:center;justify-content:space-between;gap:14px;background:var(--paper);border:1px solid var(--line);padding:13px 16px;}
+.pyq-file .fname{font-size:0.86rem;font-weight:600;}
+.pyq-file .fmeta{font-family:'Space Mono',monospace;font-size:0.65rem;opacity:0.6;margin-top:2px;}
+.pyq-file .fbtn{font-family:'Space Mono',monospace;font-size:0.7rem;font-weight:700;background:var(--ink);color:var(--card);padding:8px 14px;flex-shrink:0;}
+.pyq-empty{text-align:center;padding:40px 20px;border:1.5px dashed var(--line);}
+.pyq-empty .big{font-size:1.4rem;margin-bottom:8px;opacity:0.5;}
+.pyq-empty p{font-size:0.85rem;opacity:0.7;max-width:380px;margin:0 auto;}
+.pyq-empty code{font-family:'Space Mono',monospace;background:var(--paper);padding:1px 6px;border:1px solid var(--line);font-size:0.75rem;}
+
+footer{border-top:2px solid var(--ink);padding:26px 6vw;display:flex;justify-content:space-between;font-size:0.8rem;opacity:0.65;flex-wrap:wrap;gap:10px;}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="brand">Power of Education UG<span>Notes Library · MSU Saharanpur</span></div>
+  <div class="nav-mid">🔍<input type="text" placeholder="Search subject, faculty, or paper code..."></div>
+  <div class="nav-links">
+    <a href="#catalog">Catalog</a>
+    <a href="#pyq">PYQ Folders</a>
+    <a href="#combo">Combo</a>
+    <a href="#" class="nav-cta">Get Notes</a>
+  </div>
+</nav>
+
+<header class="hero">
+  <div>
+    <div class="drawer-label">Drawer 01 — B.A. / M.A. Notes</div>
+    <h1>Ek library jitni notes,<br>ek <em>PDF</em> jitni aasan.</h1>
+    <p class="sub">Political Science, Sociology, Economics and Geography notes under NEP 2020 — written by MSU faculty, explained simply.</p>
+    <div class="cta-row">
+      <a href="#catalog" class="btn-primary">Browse Catalog</a>
+      <a href="#pyq" class="btn-outline">Browse PYQ Folders</a>
+    </div>
+  </div>
+  <div class="drawer">
+    <div class="card-stack">
+      <div class="index-card c1"><div class="tab">GEO-101</div><h4>Geography</h4><p>Physical & human geography, mapwork essentials.</p><div class="meta"><span>Sheetal</span><span>₹149</span></div></div>
+      <div class="index-card c2"><div class="tab">ECO-101</div><h4>Economics</h4><p>Micro/Macro core theory, Hinglish examples.</p><div class="meta"><span>Shivam Kumar</span><span>₹149</span></div></div>
+      <div class="index-card c3"><div class="tab">POL-SCI</div><h4>Political Science</h4><p>Indian National Movement, Constitution.</p><div class="meta"><span>Shalok Kumar</span><span>₹149</span></div></div>
+    </div>
+  </div>
+</header>
+
+<section id="catalog">
+  <div class="section-head">
+    <div class="tag">Full Catalog</div>
+    <h2>Sabhi Subjects Ke E-Notes, Ek Jagah</h2>
+    <div class="filters">
+      <span class="filter-chip active">All</span>
+      <span class="filter-chip">Political Science</span>
+      <span class="filter-chip">Sociology</span>
+      <span class="filter-chip">Economics</span>
+      <span class="filter-chip">Geography</span>
+      <span class="filter-chip">PYQ Solved</span>
+      <span class="filter-chip">Combo Pack</span>
+    </div>
+  </div>
+
+  <div class="grid">
+
+    <div class="book-card c1">
+      <div class="cover"><div class="flags"><span class="flag new">New</span></div><div class="code">POL-SCI · 0110601</div><div><div class="subj">Political Science<br>Notes B.A. Sem 1</div><div class="faculty">Shalok Kumar</div></div></div>
+      <div class="info"><h4>Indian National Movement & Constitution</h4><div class="author">by Shalok Kumar</div><div class="stars">★★★★<span>★</span></div><div class="price-row"><div class="price"><s>₹299</s>₹149</div></div><div class="actions"><a href="#" class="btn-view">View</a><a href="#" class="btn-icon">♡</a></div></div>
+    </div>
+
+    <div class="book-card c2">
+      <div class="cover"><div class="flags"><span class="flag new">New</span></div><div class="code">SOC-101</div><div><div class="subj">Sociology<br>Notes B.A. Sem 1</div><div class="faculty">Afsha</div></div></div>
+      <div class="info"><h4>Core Concepts & Society Structure</h4><div class="author">by Afsha</div><div class="stars">★★★★<span>★</span></div><div class="price-row"><div class="price"><s>₹299</s>₹149</div></div><div class="actions"><a href="#" class="btn-view">View</a><a href="#" class="btn-icon">♡</a></div></div>
+    </div>
+
+    <div class="book-card c3">
+      <div class="cover"><div class="code">ECO-101</div><div><div class="subj">Economics<br>Notes B.A. Sem 1</div><div class="faculty">Shivam Kumar</div></div></div>
+      <div class="info"><h4>Micro & Macro Fundamentals</h4><div class="author">by Shivam Kumar</div><div class="stars">★★★<span>★★</span></div><div class="price-row"><div class="price"><s>₹299</s>₹149</div></div><div class="actions"><a href="#" class="btn-view">View</a><a href="#" class="btn-icon">♡</a></div></div>
+    </div>
+
+    <div class="book-card c4">
+      <div class="cover"><div class="code">GEO-101</div><div><div class="subj">Geography<br>Notes B.A. Sem 1</div><div class="faculty">Sheetal</div></div></div>
+      <div class="info"><h4>Physical & Human Geography</h4><div class="author">by Sheetal</div><div class="stars">★★★★<span>★</span></div><div class="price-row"><div class="price"><s>₹299</s>₹149</div></div><div class="actions"><a href="#" class="btn-view">View</a><a href="#" class="btn-icon">♡</a></div></div>
+    </div>
+
+    <div class="book-card c1">
+      <div class="cover"><div class="flags"><span class="flag pyq">PYQ</span></div><div class="code">POL-SCI · Dec 2024</div><div><div class="subj">Political Science<br>Solved PYQ</div><div class="faculty">Shalok Kumar</div></div></div>
+      <div class="info"><h4>Dec 2024 Solved Answer Book</h4><div class="author">by Shalok Kumar</div><div class="stars">★★★★★</div><div class="price-row"><div class="price">₹99</div></div><div class="actions"><a href="#" class="btn-view">View</a><a href="#" class="btn-icon">♡</a></div></div>
+    </div>
+
+    <div class="book-card c2">
+      <div class="cover"><div class="flags"><span class="flag pyq">PYQ</span></div><div class="code">SOC-101 · Dec 2024</div><div><div class="subj">Sociology<br>Solved PYQ</div><div class="faculty">Afsha</div></div></div>
+      <div class="info"><h4>Dec 2024 Solved Answer Book</h4><div class="author">by Afsha</div><div class="stars">★★★★<span>★</span></div><div class="price-row"><div class="price">₹99</div></div><div class="actions"><a href="#" class="btn-view">View</a><a href="#" class="btn-icon">♡</a></div></div>
+    </div>
+
+    <div class="book-card c3">
+      <div class="cover"><div class="flags"><span class="flag pyq">PYQ</span></div><div class="code">ECO-101 · Dec 2024</div><div><div class="subj">Economics<br>Solved PYQ</div><div class="faculty">Shivam Kumar</div></div></div>
+      <div class="info"><h4>Dec 2024 Solved Answer Book</h4><div class="author">by Shivam Kumar</div><div class="stars">★★★<span>★★</span></div><div class="price-row"><div class="price">₹99</div></div><div class="actions"><a href="#" class="btn-view">View</a><a href="#" class="btn-icon">♡</a></div></div>
+    </div>
+
+    <div class="book-card c4">
+      <div class="cover"><div class="flags"><span class="flag pyq">PYQ</span></div><div class="code">GEO-101 · Dec 2024</div><div><div class="subj">Geography<br>Solved PYQ</div><div class="faculty">Sheetal</div></div></div>
+      <div class="info"><h4>Dec 2024 Solved Answer Book</h4><div class="author">by Sheetal</div><div class="stars">★★★★<span>★</span></div><div class="price-row"><div class="price">₹99</div></div><div class="actions"><a href="#" class="btn-view">View</a><a href="#" class="btn-icon">♡</a></div></div>
+    </div>
+
+    <div class="book-card c1">
+      <div class="cover"><div class="code">MA-POL-SCI</div><div><div class="subj">M.A. Political<br>Science Notes</div><div class="faculty">Shalok Kumar</div></div></div>
+      <div class="info"><h4>M.A. Political Science — Full Notes</h4><div class="author">by Shalok Kumar</div><div class="stars">★★★★<span>★</span></div><div class="price-row"><div class="price"><s>₹349</s>₹199</div></div><div class="actions"><a href="#" class="btn-view">View</a><a href="#" class="btn-icon">♡</a></div></div>
+    </div>
+
+    <div class="book-card c2">
+      <div class="cover"><div class="code">GUIDE</div><div><div class="subj">Exam Strategy<br>Guide</div><div class="faculty">Shalok Kumar</div></div></div>
+      <div class="info"><h4>MSU Exam Strategy & Time Management</h4><div class="author">by Shalok Kumar</div><div class="stars">★★★<span>★★</span></div><div class="price-row"><div class="price">₹49</div></div><div class="actions"><a href="#" class="btn-view">View</a><a href="#" class="btn-icon">♡</a></div></div>
+    </div>
+
+    <div class="book-card c3">
+      <div class="cover"><div class="flags"><span class="flag free">Free</span></div><div class="code">NEP-GUIDE</div><div><div class="subj">NEP 2020<br>Syllabus Guide</div><div class="faculty">PoE UG Team</div></div></div>
+      <div class="info"><h4>NEP 2020 Syllabus — Quick Reference</h4><div class="author">by PoE UG Team</div><div class="stars">★★★★<span>★</span></div><div class="price-row"><div class="price">Free</div></div><div class="actions"><a href="#" class="btn-view">View</a><a href="#" class="btn-icon">♡</a></div></div>
+    </div>
+
+    <div class="book-card c4">
+      <div class="cover"><div class="flags"><span class="flag combo">Combo</span></div><div class="code">ALL-4-SUBJ</div><div><div class="subj">Full Semester<br>Combo Pack</div><div class="faculty">PoE UG Faculty</div></div></div>
+      <div class="info"><h4>All 4 Subjects — Notes + PYQ</h4><div class="author">by PoE UG Team</div><div class="stars">★★★★★</div><div class="price-row"><div class="price"><s>₹1196</s>₹499</div></div><div class="actions"><a href="#" class="btn-view">View</a><a href="#" class="btn-icon">♡</a></div></div>
+    </div>
+
+  </div>
+</section>
+
+<section id="pyq">
+  <div class="section-head">
+    <div class="tag">Previous Year Questions</div>
+    <h2>PYQ Folders — Browse by Course</h2>
+  </div>
+
+  <div class="pyq-shell">
+    <div class="pyq-toolbar">
+      <div class="pyq-crumbs" id="pyqCrumbs"></div>
+      <button class="pyq-back" id="pyqBack">← Back</button>
+    </div>
+    <div class="pyq-body" id="pyqBody"></div>
+  </div>
+</section>
+
+<section id="combo">
+  <div class="combo">
+    <div><h3>The Whole Drawer — Combo Pack</h3><p>All four subjects together, complete with solved PYQs. Buy once, use it the whole semester.</p></div>
+    <div style="text-align:right;"><div class="price"><s>₹1196</s>₹499</div><a href="#" class="btn-primary" style="display:inline-block;margin-top:12px;">Buy Combo</a></div>
+  </div>
+</section>
+
+<div class="banner">
+  <div class="banner-item"><div class="ic">↺</div><div><h5>Money Back Guarantee</h5><p>Notes pasand nahi to full refund</p></div></div>
+  <div class="banner-item"><div class="ic">☎</div><div><h5>WhatsApp Support (10AM–7PM)</h5><p>@powerofeducationug</p></div></div>
+  <div class="banner-item"><div class="ic">🔒</div><div><h5>Safe & Secure Payment</h5><p>UPI, Card, Netbanking supported</p></div></div>
+</div>
+
+<footer>
+  <span>© Power of Education UG · Saharanpur, UP</span>
+  <span>WhatsApp Support · @powerofeducationug</span>
+</footer>
+
+<script>
+/* ======================================================================
+   PYQ FOLDER LIBRARY — DATA
+   ----------------------------------------------------------------------
+   This mirrors your Google Drive structure: Course > Subject > Semester > Paper.
+
+   HOW TO EDIT THIS:
+   - Every "folder" is a plain JS object: { "Folder Name": { ...more folders... } }
+   - A "paper" (the bottom-most folder) holds an ARRAY of PYQ files instead
+     of another object, e.g. "Comparative Politics": []
+   - Each file inside that array is an object like:
+       { title: "Dec 2024 Solved PYQ", year: "2024", link: "https://drive.google.com/..." }
+   - To add a brand-new course, subject, semester, or paper, just add a new
+     key anywhere in the tree below, following the same pattern.
+   - Leave a paper's array as [] until you have a real file/link — it will
+     show a friendly "no papers uploaded yet" placeholder automatically.
+   ====================================================================== */
+const pyqData = {
+  "B.A": {},
+  "B.B.A": {},
+  "B.Com": {},
+  "B.Ed": {},
+  "B.Sc": {},
+  "B.Sc Agriculture": {},
+  "B.Sc Computer Science": {},
+  "BCA": {},
+  "Co-curriculum": {},
+  "LLB": {},
+  "LLM": {},
+  "M.A": {
+    "Economics": { "1st Sem": {}, "2nd Sem": {}, "3rd Sem": {}, "4th Sem": {} },
+    "Education": { "1st Sem": {}, "2nd Sem": {}, "3rd Sem": {}, "4th Sem": {} },
+    "Geography": { "1st Sem": {}, "2nd Sem": {}, "3rd Sem": {}, "4th Sem": {} },
+    "Hindi": { "1st Sem": {}, "2nd Sem": {}, "3rd Sem": {}, "4th Sem": {} },
+    "History": { "1st Sem": {}, "2nd Sem": {}, "3rd Sem": {}, "4th Sem": {} },
+    "Political Science": {
+      "1st Sem": {
+        "Comparative Politics": [],
+        "Dissertation And Viva Voce": [],
+        "Indian Political System": [],
+        "International Relations": [],
+        "Modern Indian Political Thought": [],
+        "Traditions Of Political Thought": []
+      },
+      "2nd Sem": {},
+      "3rd Sem": {},
+      "4th Sem": {}
+    },
+    "Psychology": { "1st Sem": {}, "2nd Sem": {}, "3rd Sem": {}, "4th Sem": {} },
+    "Public Administration": { "1st Sem": {}, "2nd Sem": {}, "3rd Sem": {}, "4th Sem": {} },
+    "Sociology": { "1st Sem": {}, "2nd Sem": {}, "3rd Sem": {}, "4th Sem": {} }
+  },
+  "M.B.A": {},
+  "M.Com": {},
+  "M.Ed": {},
+  "M.Sc": {},
+  "M.Sc Agriculture": {},
+  "MCA": {},
+  "Minor": {}
+};
+
+/* ======================================================================
+   PYQ FOLDER LIBRARY — ENGINE (no need to edit below this line)
+   ====================================================================== */
+(function(){
+  let path = []; // current folder path, e.g. ["M.A","Political Science","1st Sem"]
+
+  function getNode(p){
+    let node = pyqData;
+    for(const key of p){ node = node[key]; }
+    return node;
+  }
+
+  function isFileArray(node){ return Array.isArray(node); }
+
+  function render(){
+    const crumbsEl = document.getElementById('pyqCrumbs');
+    const bodyEl = document.getElementById('pyqBody');
+    const backBtn = document.getElementById('pyqBack');
+    backBtn.style.visibility = path.length ? 'visible' : 'hidden';
+
+    // breadcrumbs
+    crumbsEl.innerHTML = '';
+    const rootCrumb = document.createElement('span');
+    rootCrumb.className = 'crumb';
+    rootCrumb.textContent = 'PYQ Library';
+    rootCrumb.onclick = () => { path = []; render(); };
+    crumbsEl.appendChild(rootCrumb);
+    path.forEach((seg, i) => {
+      const sep = document.createElement('span');
+      sep.className = 'sep';
+      sep.textContent = '›';
+      crumbsEl.appendChild(sep);
+      const c = document.createElement('span');
+      c.className = 'crumb';
+      c.textContent = seg;
+      c.onclick = () => { path = path.slice(0, i+1); render(); };
+      crumbsEl.appendChild(c);
+    });
+
+    const node = getNode(path);
+    bodyEl.innerHTML = '';
+
+    if (isFileArray(node)) {
+      // leaf: list of PYQ files
+      if (node.length === 0) {
+        bodyEl.innerHTML = `<div class="pyq-empty"><div class="big">🗂️</div>
+          <p>No PYQs uploaded yet for <strong>${path[path.length-1]}</strong>.<br>
+          Add entries to the <code>pyqData</code> object in the page's script to list files here.</p></div>`;
+        return;
+      }
+      const list = document.createElement('div');
+      list.className = 'pyq-file-list';
+      node.forEach(file => {
+        const row = document.createElement('div');
+        row.className = 'pyq-file';
+        row.innerHTML = `<div><div class="fname">${file.title || 'Untitled PYQ'}</div>
+          <div class="fmeta">${file.year ? file.year : ''}</div></div>
+          <a class="fbtn" href="${file.link || '#'}" target="_blank" rel="noopener">View</a>`;
+        list.appendChild(row);
+      });
+      bodyEl.appendChild(list);
+      return;
+    }
+
+    const keys = Object.keys(node);
+    if (keys.length === 0) {
+      bodyEl.innerHTML = `<div class="pyq-empty"><div class="big">📁</div>
+        <p>This folder is empty right now.<br>
+        Add subject or semester folders here anytime inside <code>pyqData</code>.</p></div>`;
+      return;
+    }
+
+    const grid = document.createElement('div');
+    grid.className = 'pyq-folder-grid';
+    keys.forEach(key => {
+      const child = node[key];
+      const childIsFiles = Array.isArray(child);
+      const count = childIsFiles ? child.length : Object.keys(child).length;
+      const btn = document.createElement('button');
+      btn.className = 'pyq-folder';
+      btn.innerHTML = `<span class="ico">${childIsFiles ? '📄' : '📁'}</span>
+        <span>${key}<span class="count">${childIsFiles ? count + ' file' + (count===1?'':'s') : count + ' item' + (count===1?'':'s')}</span></span>`;
+      btn.onclick = () => { path = [...path, key]; render(); };
+      grid.appendChild(btn);
+    });
+    bodyEl.appendChild(grid);
+  }
+
+  document.getElementById('pyqBack').onclick = () => { path = path.slice(0, -1); render(); };
+  render();
+})();
+</script>
+
+</body>
+</html>
