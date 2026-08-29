@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Login / Register — Power of Education UG</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@600;700&family=Hind:wght@400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{--paper:#EDE6D6;--card:#FBF7EC;--ink:#241F17;--rust:#A8462F;--olive:#5C6B4A;--line:#c9bfa4;--green:#6B7F52;}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{background:var(--paper);color:var(--ink);font-family:'Hind',sans-serif;min-height:100vh;}
+a{text-decoration:none;color:inherit;}
+
+.nav{display:flex;align-items:center;justify-content:space-between;padding:16px 6vw;border-bottom:2px solid var(--ink);}
+.brand{font-family:'Fraunces',serif;font-weight:700;font-size:1.15rem;}
+.brand span{display:block;font-family:'Space Mono',monospace;font-size:0.55rem;letter-spacing:2px;color:var(--rust);text-transform:uppercase;margin-top:2px;}
+.nav-links{display:flex;gap:24px;align-items:center;font-size:0.88rem;}
+@media(max-width:600px){.nav-links a{display:none;}}
+
+.wrap{display:flex;align-items:center;justify-content:center;padding:60px 6vw;min-height:calc(100vh - 90px);}
+.auth-box{width:100%;max-width:420px;background:var(--card);border:1px solid var(--line);padding:36px 32px;}
+@media(max-width:480px){.auth-box{padding:28px 22px;}}
+.tabs{display:flex;border:1px solid var(--ink);margin-bottom:26px;}
+.tab-btn{flex:1;text-align:center;padding:11px 0;font-family:'Space Mono',monospace;font-size:0.78rem;font-weight:700;letter-spacing:0.5px;cursor:pointer;background:var(--paper);}
+.tab-btn.active{background:var(--ink);color:var(--card);}
+.auth-title{font-family:'Fraunces',serif;font-size:1.35rem;margin-bottom:6px;}
+.auth-sub{font-size:0.85rem;opacity:0.65;margin-bottom:24px;}
+
+.field{margin-bottom:16px;}
+.field label{display:block;font-family:'Space Mono',monospace;font-size:0.65rem;text-transform:uppercase;letter-spacing:1px;opacity:0.65;margin-bottom:6px;}
+.field input, .field select{width:100%;padding:11px 12px;background:var(--paper);border:1px solid var(--line);font-family:'Hind',sans-serif;font-size:0.9rem;color:var(--ink);outline:none;}
+.field input:focus, .field select:focus{border-color:var(--rust);}
+
+.btn-primary{width:100%;background:var(--ink);color:var(--card);font-weight:700;padding:13px 0;border:none;font-size:0.9rem;cursor:pointer;margin-top:6px;}
+.btn-primary:hover{background:var(--rust);}
+.msg{font-size:0.8rem;margin-top:12px;padding:10px 12px;display:none;}
+.msg.error{display:block;background:rgba(168,70,47,0.12);color:var(--rust);border:1px solid rgba(168,70,47,0.3);}
+.msg.success{display:block;background:rgba(107,127,82,0.15);color:var(--olive);border:1px solid rgba(107,127,82,0.35);}
+.switch-line{text-align:center;font-size:0.8rem;opacity:0.7;margin-top:18px;}
+.switch-line a{color:var(--rust);font-weight:600;}
+.demo-note{font-family:'Space Mono',monospace;font-size:0.62rem;opacity:0.5;margin-top:22px;line-height:1.6;border-top:1px dashed var(--line);padding-top:14px;}
+
+.form-panel{display:none;}
+.form-panel.active{display:block;}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <a href="index.html" class="brand">Power of Education UG<span>Notes Library · MSU Saharanpur</span></a>
+  <div class="nav-links">
+    <a href="index.html#catalog">Catalog</a>
+    <a href="about.html">About</a>
+  </div>
+</nav>
+
+<div class="wrap">
+  <div class="auth-box">
+    <div class="tabs">
+      <div class="tab-btn active" id="tabLogin" onclick="switchTab('login')">Login</div>
+      <div class="tab-btn" id="tabRegister" onclick="switchTab('register')">Register</div>
+    </div>
+
+    <div class="form-panel active" id="panelLogin">
+      <div class="auth-title">Welcome back</div>
+      <div class="auth-sub">Log in to see your notes and PYQ downloads.</div>
+      <form id="loginForm" onsubmit="return handleLogin(event)">
+        <div class="field"><label>Email</label><input type="email" id="loginEmail" required placeholder="you@example.com"></div>
+        <div class="field"><label>Password</label><input type="password" id="loginPassword" required placeholder="••••••••"></div>
+        <button type="submit" class="btn-primary">Log In</button>
+        <div class="msg" id="loginMsg"></div>
+      </form>
+      <div class="switch-line">New here? <a href="#" onclick="switchTab('register');return false;">Create an account</a></div>
+    </div>
+
+    <div class="form-panel" id="panelRegister">
+      <div class="auth-title">Create your account</div>
+      <div class="auth-sub">Takes less than a minute.</div>
+      <form id="registerForm" onsubmit="return handleRegister(event)">
+        <div class="field"><label>Full Name</label><input type="text" id="regName" required placeholder="Your name"></div>
+        <div class="field"><label>Email</label><input type="email" id="regEmail" required placeholder="you@example.com"></div>
+        <div class="field"><label>Course</label>
+          <select id="regCourse" required>
+            <option value="">Select course</option>
+            <option>B.A</option><option>B.Com</option><option>B.Sc</option>
+            <option>M.A</option><option>M.Com</option><option>M.Sc</option>
+            <option>LLB</option><option>MCA</option><option>Other</option>
+          </select>
+        </div>
+        <div class="field"><label>Password</label><input type="password" id="regPassword" required minlength="6" placeholder="At least 6 characters"></div>
+        <button type="submit" class="btn-primary">Create Account</button>
+        <div class="msg" id="registerMsg"></div>
+      </form>
+      <div class="switch-line">Already have an account? <a href="#" onclick="switchTab('login');return false;">Log in</a></div>
+    </div>
+
+    <div class="demo-note">
+      NOTE FOR DEV: this login/register is a front-end-only demo — it stores accounts in this browser's
+      localStorage (key "poe_users") so the Dashboard page has something to show. Wire it up to your real
+      backend/database (once chosen) by replacing the handleLogin() / handleRegister() functions below.
+    </div>
+  </div>
+</div>
+
+<script>
+function switchTab(which){
+  document.getElementById('tabLogin').classList.toggle('active', which==='login');
+  document.getElementById('tabRegister').classList.toggle('active', which==='register');
+  document.getElementById('panelLogin').classList.toggle('active', which==='login');
+  document.getElementById('panelRegister').classList.toggle('active', which==='register');
+}
+
+function getUsers(){
+  try { return JSON.parse(localStorage.getItem('poe_users') || '[]'); }
+  catch(e){ return []; }
+}
+function saveUsers(users){ localStorage.setItem('poe_users', JSON.stringify(users)); }
+
+function showMsg(id, text, type){
+  const el = document.getElementById(id);
+  el.textContent = text;
+  el.className = 'msg ' + type;
+}
+
+function handleRegister(e){
+  e.preventDefault();
+  const name = document.getElementById('regName').value.trim();
+  const email = document.getElementById('regEmail').value.trim().toLowerCase();
+  const course = document.getElementById('regCourse').value;
+  const password = document.getElementById('regPassword').value;
+
+  const users = getUsers();
+  if (users.find(u => u.email === email)) {
+    showMsg('registerMsg', 'An account with this email already exists. Try logging in.', 'error');
+    return false;
+  }
+  users.push({ name, email, course, password, joined: new Date().toISOString() });
+  saveUsers(users);
+  localStorage.setItem('poe_session', email);
+  showMsg('registerMsg', 'Account created! Redirecting to your dashboard...', 'success');
+  setTimeout(() => window.location.href = 'dashboard.html', 700);
+  return false;
+}
+
+function handleLogin(e){
+  e.preventDefault();
+  const email = document.getElementById('loginEmail').value.trim().toLowerCase();
+  const password = document.getElementById('loginPassword').value;
+
+  const users = getUsers();
+  const match = users.find(u => u.email === email && u.password === password);
+  if (!match) {
+    showMsg('loginMsg', 'No matching account found. Check your details or register below.', 'error');
+    return false;
+  }
+  localStorage.setItem('poe_session', email);
+  showMsg('loginMsg', 'Logged in! Redirecting to your dashboard...', 'success');
+  setTimeout(() => window.location.href = 'dashboard.html', 500);
+  return false;
+}
+</script>
+
+</body>
+</html>

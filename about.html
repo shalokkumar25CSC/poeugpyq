@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>About — Power of Education UG</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@600;700&family=Hind:wght@400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{--paper:#EDE6D6;--card:#FBF7EC;--ink:#241F17;--rust:#A8462F;--olive:#5C6B4A;--line:#c9bfa4;--green:#6B7F52;}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{background:var(--paper);color:var(--ink);font-family:'Hind',sans-serif;}
+a{text-decoration:none;color:inherit;}
+section{padding:64px 6vw;}
+
+.nav{display:flex;align-items:center;justify-content:space-between;padding:16px 6vw;border-bottom:2px solid var(--ink);position:sticky;top:0;background:var(--paper);z-index:20;}
+.brand{font-family:'Fraunces',serif;font-weight:700;font-size:1.15rem;}
+.brand span{display:block;font-family:'Space Mono',monospace;font-size:0.55rem;letter-spacing:2px;color:var(--rust);text-transform:uppercase;margin-top:2px;}
+.nav-links{display:flex;gap:28px;align-items:center;font-size:0.9rem;flex-wrap:wrap;}
+.nav-cta{border:1.5px solid var(--ink);padding:8px 16px;font-weight:600;}
+@media(max-width:700px){.nav-links a:not(.nav-cta){display:none;}}
+
+.section-head{text-align:center;margin-bottom:40px;}
+.section-head .tag{font-family:'Space Mono',monospace;font-size:0.7rem;color:var(--rust);letter-spacing:2px;text-transform:uppercase;}
+.section-head h2{font-family:'Fraunces',serif;font-size:clamp(1.5rem,3vw,2.1rem);margin-top:8px;}
+
+.story{max-width:760px;margin:0 auto;font-size:1.03rem;line-height:1.75;opacity:0.9;}
+.story p{margin-bottom:18px;}
+
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;max-width:1000px;margin:0 auto;}
+@media(max-width:800px){.grid3{grid-template-columns:1fr;}}
+.value-card{background:var(--card);border:1px solid var(--line);padding:26px 22px;}
+.value-card .ic{width:42px;height:42px;border-radius:50%;background:var(--paper);border:1px solid var(--rust);display:flex;align-items:center;justify-content:center;color:var(--rust);font-size:1.05rem;margin-bottom:14px;}
+.value-card h5{font-family:'Fraunces',serif;font-size:1rem;margin-bottom:6px;}
+.value-card p{font-size:0.85rem;opacity:0.7;line-height:1.6;}
+
+.team{max-width:1000px;margin:0 auto;display:grid;grid-template-columns:repeat(4,1fr);gap:20px;}
+@media(max-width:800px){.team{grid-template-columns:repeat(2,1fr);}}
+.member{background:var(--card);border:1px solid var(--line);padding:20px;text-align:center;}
+.member .avatar{width:56px;height:56px;border-radius:50%;background:linear-gradient(155deg,#A8462F,#7c3323);margin:0 auto 12px;}
+.member h5{font-family:'Fraunces',serif;font-size:0.92rem;margin-bottom:3px;}
+.member p{font-family:'Space Mono',monospace;font-size:0.62rem;opacity:0.6;text-transform:uppercase;letter-spacing:1px;}
+
+.cta-strip{background:var(--ink);color:var(--card);padding:38px 34px;text-align:center;}
+.cta-strip h3{font-family:'Fraunces',serif;font-size:1.3rem;margin-bottom:10px;}
+.cta-strip p{opacity:0.75;font-size:0.9rem;margin-bottom:18px;}
+.btn-primary{display:inline-block;background:var(--rust);color:var(--card);font-weight:600;padding:14px 26px;}
+
+footer{border-top:2px solid var(--ink);padding:26px 6vw;display:flex;justify-content:space-between;font-size:0.8rem;opacity:0.65;flex-wrap:wrap;gap:10px;}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <a href="index.html" class="brand">Power of Education UG<span>Notes Library · MSU Saharanpur</span></a>
+  <div class="nav-links">
+    <a href="index.html#catalog">Catalog</a>
+    <a href="index.html#pyq">PYQ Folders</a>
+    <a href="about.html">About</a>
+    <a href="dashboard.html">Dashboard</a>
+    <a href="login.html" class="nav-cta">Login / Register</a>
+  </div>
+</nav>
+
+<section>
+  <div class="section-head">
+    <div class="tag">Who We Are</div>
+    <h2>About Power of Education UG</h2>
+  </div>
+  <div class="story">
+    <p>Power of Education UG started as a simple idea inside MSU Saharanpur: exam-ready notes shouldn't be scattered across ten different WhatsApp groups. We collect, write, and organise notes and solved previous-year question papers (PYQs) for B.A., M.A., and other UG/PG courses, all built around the NEP 2020 syllabus.</p>
+    <p>Every subject on this site is put together by someone who has actually studied or taught that paper at MSU — not copied from random PDFs floating around the internet. That's why you'll see real names like Shalok Kumar, Afsha, Shivam Kumar, and Sheetal credited on the notes they've written.</p>
+    <p>Our PYQ Folders section is organised exactly like a library drawer — Course → Subject → Semester → Paper — so you can find last year's question paper for your exact paper in a few clicks, the same way you'd browse a shared drive.</p>
+  </div>
+</section>
+
+<section>
+  <div class="section-head">
+    <div class="tag">What We Stand For</div>
+    <h2>Built By Students, For Students</h2>
+  </div>
+  <div class="grid3">
+    <div class="value-card">
+      <div class="ic">✎</div>
+      <h5>Written By Real Faculty & Toppers</h5>
+      <p>No copy-paste content. Every set of notes is written by someone who has cleared that exact paper.</p>
+    </div>
+    <div class="value-card">
+      <div class="ic">₹</div>
+      <h5>Affordable Pricing</h5>
+      <p>Notes and solved PYQs are priced so every student can access them, with a free NEP 2020 syllabus guide always available.</p>
+    </div>
+    <div class="value-card">
+      <div class="ic">↺</div>
+      <h5>Money-Back Guarantee</h5>
+      <p>If the notes aren't useful to you, we refund you — no long forms, just a WhatsApp message.</p>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="section-head">
+    <div class="tag">The People Behind The Notes</div>
+    <h2>Our Contributors</h2>
+  </div>
+  <div class="team">
+    <div class="member"><div class="avatar"></div><h5>Shalok Kumar</h5><p>Political Science</p></div>
+    <div class="member"><div class="avatar" style="background:linear-gradient(155deg,#5C6B4A,#404b34);"></div><h5>Afsha</h5><p>Sociology</p></div>
+    <div class="member"><div class="avatar" style="background:linear-gradient(155deg,#7a5a3a,#54402a);"></div><h5>Shivam Kumar</h5><p>Economics</p></div>
+    <div class="member"><div class="avatar" style="background:linear-gradient(155deg,#3f4f45,#2b352e);"></div><h5>Sheetal</h5><p>Geography</p></div>
+  </div>
+</section>
+
+<section>
+  <div class="cta-strip">
+    <h3>Have a question about a paper or a subject?</h3>
+    <p>We reply fastest on WhatsApp between 10AM–7PM.</p>
+    <a href="https://wa.me/" class="btn-primary">Message Us on WhatsApp</a>
+  </div>
+</section>
+
+<footer>
+  <span>© Power of Education UG · Saharanpur, UP</span>
+  <span><a href="privacy.html">Privacy Policy</a> · WhatsApp Support · @powerofeducationug</span>
+</footer>
+
+</body>
+</html>

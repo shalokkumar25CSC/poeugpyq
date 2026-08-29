@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>My Dashboard — Power of Education UG</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@600;700&family=Hind:wght@400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{--paper:#EDE6D6;--card:#FBF7EC;--ink:#241F17;--rust:#A8462F;--olive:#5C6B4A;--line:#c9bfa4;--green:#6B7F52;}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{background:var(--paper);color:var(--ink);font-family:'Hind',sans-serif;}
+a{text-decoration:none;color:inherit;}
+
+.nav{display:flex;align-items:center;justify-content:space-between;padding:16px 6vw;border-bottom:2px solid var(--ink);position:sticky;top:0;background:var(--paper);z-index:20;}
+.brand{font-family:'Fraunces',serif;font-weight:700;font-size:1.15rem;}
+.brand span{display:block;font-family:'Space Mono',monospace;font-size:0.55rem;letter-spacing:2px;color:var(--rust);text-transform:uppercase;margin-top:2px;}
+.nav-links{display:flex;gap:24px;align-items:center;font-size:0.88rem;}
+.nav-cta{border:1.5px solid var(--ink);padding:8px 16px;font-weight:600;cursor:pointer;background:none;font-family:inherit;font-size:0.88rem;color:var(--ink);}
+@media(max-width:700px){.nav-links a{display:none;}}
+
+.dash-wrap{padding:44px 6vw 70px;max-width:1100px;margin:0 auto;}
+
+/* logged-out state */
+.locked{text-align:center;padding:80px 20px;}
+.locked .big{font-size:2rem;margin-bottom:14px;}
+.locked h2{font-family:'Fraunces',serif;font-size:1.4rem;margin-bottom:10px;}
+.locked p{opacity:0.7;margin-bottom:22px;}
+.btn-primary{display:inline-block;background:var(--ink);color:var(--card);font-weight:700;padding:13px 26px;}
+
+/* profile header */
+.profile-head{display:flex;align-items:center;gap:20px;background:var(--card);border:1px solid var(--line);padding:26px 28px;margin-bottom:30px;flex-wrap:wrap;}
+.avatar{width:64px;height:64px;border-radius:50%;background:linear-gradient(155deg,#A8462F,#7c3323);flex-shrink:0;display:flex;align-items:center;justify-content:center;color:var(--card);font-family:'Fraunces',serif;font-weight:700;font-size:1.4rem;}
+.profile-info h3{font-family:'Fraunces',serif;font-size:1.25rem;margin-bottom:4px;}
+.profile-info .meta{font-family:'Space Mono',monospace;font-size:0.72rem;opacity:0.6;}
+.profile-actions{margin-left:auto;display:flex;gap:10px;}
+.btn-outline{border:1.5px solid var(--ink);padding:9px 16px;font-weight:600;font-size:0.8rem;background:none;cursor:pointer;font-family:inherit;color:var(--ink);}
+
+/* stats row */
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:34px;}
+@media(max-width:700px){.stats{grid-template-columns:repeat(2,1fr);}}
+.stat{background:var(--card);border:1px solid var(--line);padding:18px 20px;}
+.stat .num{font-family:'Fraunces',serif;font-size:1.7rem;color:var(--rust);}
+.stat .lbl{font-family:'Space Mono',monospace;font-size:0.62rem;text-transform:uppercase;letter-spacing:1px;opacity:0.6;margin-top:4px;}
+
+.section-title{font-family:'Fraunces',serif;font-size:1.15rem;margin:34px 0 16px;display:flex;align-items:center;justify-content:space-between;}
+.section-title a{font-family:'Space Mono',monospace;font-size:0.7rem;color:var(--rust);}
+
+.purchases{display:flex;flex-direction:column;gap:10px;}
+.purchase-row{display:flex;align-items:center;justify-content:space-between;background:var(--card);border:1px solid var(--line);padding:14px 18px;flex-wrap:wrap;gap:10px;}
+.purchase-row .pname{font-weight:600;font-size:0.9rem;}
+.purchase-row .pmeta{font-family:'Space Mono',monospace;font-size:0.65rem;opacity:0.55;margin-top:2px;}
+.purchase-row .pbtn{font-family:'Space Mono',monospace;font-size:0.7rem;font-weight:700;background:var(--ink);color:var(--card);padding:8px 14px;}
+
+.empty-block{text-align:center;padding:36px 20px;border:1.5px dashed var(--line);background:var(--card);}
+.empty-block p{opacity:0.65;font-size:0.88rem;margin-bottom:14px;}
+.empty-block a{font-family:'Space Mono',monospace;font-size:0.75rem;font-weight:700;color:var(--rust);border-bottom:1px solid var(--rust);}
+
+.quick-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;}
+@media(max-width:700px){.quick-grid{grid-template-columns:1fr;}}
+.quick-card{background:var(--card);border:1px solid var(--line);padding:20px;}
+.quick-card h5{font-family:'Fraunces',serif;font-size:0.95rem;margin-bottom:6px;}
+.quick-card p{font-size:0.8rem;opacity:0.65;margin-bottom:12px;}
+.quick-card a{font-family:'Space Mono',monospace;font-size:0.7rem;font-weight:700;color:var(--rust);}
+
+footer{border-top:2px solid var(--ink);padding:26px 6vw;display:flex;justify-content:space-between;font-size:0.8rem;opacity:0.65;flex-wrap:wrap;gap:10px;}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <a href="index.html" class="brand">Power of Education UG<span>Notes Library · MSU Saharanpur</span></a>
+  <div class="nav-links">
+    <a href="index.html#catalog">Catalog</a>
+    <a href="index.html#pyq">PYQ Folders</a>
+    <a href="about.html">About</a>
+    <button class="nav-cta" id="logoutBtn" onclick="logout()" style="display:none;">Log Out</button>
+  </div>
+</nav>
+
+<div class="dash-wrap" id="dashWrap">
+  <!-- content injected by script -->
+</div>
+
+<footer>
+  <span>© Power of Education UG · Saharanpur, UP</span>
+  <span><a href="privacy.html">Privacy Policy</a> · WhatsApp Support · @powerofeducationug</span>
+</footer>
+
+<script>
+/* ======================================================================
+   STUDENT DASHBOARD
+   ----------------------------------------------------------------------
+   Reads the logged-in user from localStorage (set by login.html's demo
+   auth). Purchases below are placeholder/sample data — once you have a
+   real backend, replace loadPurchases() to fetch the student's actual
+   orders instead of using the samplePurchases array.
+   ====================================================================== */
+
+const samplePurchases = [
+  // Example shape — replace with real order data from your backend later:
+  // { title: "Political Science Notes B.A. Sem 1", type: "Notes", date: "2026-08-10", link: "#" }
+];
+
+function getUsers(){
+  try { return JSON.parse(localStorage.getItem('poe_users') || '[]'); }
+  catch(e){ return []; }
+}
+
+function logout(){
+  localStorage.removeItem('poe_session');
+  render();
+}
+
+function initials(name){
+  return name.split(' ').filter(Boolean).slice(0,2).map(w => w[0].toUpperCase()).join('');
+}
+
+function render(){
+  const wrap = document.getElementById('dashWrap');
+  const logoutBtn = document.getElementById('logoutBtn');
+  const sessionEmail = localStorage.getItem('poe_session');
+  const user = sessionEmail ? getUsers().find(u => u.email === sessionEmail) : null;
+
+  if (!user) {
+    logoutBtn.style.display = 'none';
+    wrap.innerHTML = `
+      <div class="locked">
+        <div class="big">🔒</div>
+        <h2>You're not logged in</h2>
+        <p>Log in or create an account to see your profile, purchases, and saved PYQs.</p>
+        <a href="login.html" class="btn-primary">Go to Login / Register</a>
+      </div>`;
+    return;
+  }
+
+  logoutBtn.style.display = 'inline-block';
+  const purchases = samplePurchases; // swap for real fetched data later
+
+  wrap.innerHTML = `
+    <div class="profile-head">
+      <div class="avatar">${initials(user.name || user.email)}</div>
+      <div class="profile-info">
+        <h3>${user.name || 'Student'}</h3>
+        <div class="meta">${user.email}${user.course ? ' · ' + user.course : ''} · Joined ${new Date(user.joined || Date.now()).toLocaleDateString('en-IN', { year:'numeric', month:'short', day:'numeric' })}</div>
+      </div>
+      <div class="profile-actions">
+        <button class="btn-outline" onclick="alert('Hook this up to a real edit-profile form once your backend is ready.')">Edit Profile</button>
+      </div>
+    </div>
+
+    <div class="stats">
+      <div class="stat"><div class="num">${purchases.length}</div><div class="lbl">Notes / PYQs Owned</div></div>
+      <div class="stat"><div class="num">0</div><div class="lbl">Wishlist Items</div></div>
+      <div class="stat"><div class="num">${user.course || '—'}</div><div class="lbl">Course</div></div>
+      <div class="stat"><div class="num">Active</div><div class="lbl">Account Status</div></div>
+    </div>
+
+    <div class="section-title">My Purchases <a href="index.html#catalog">Browse catalog →</a></div>
+    ${purchases.length ? `
+      <div class="purchases">
+        ${purchases.map(p => `
+          <div class="purchase-row">
+            <div><div class="pname">${p.title}</div><div class="pmeta">${p.type} · Purchased ${p.date}</div></div>
+            <a class="pbtn" href="${p.link || '#'}" target="_blank" rel="noopener">Download</a>
+          </div>`).join('')}
+      </div>` : `
+      <div class="empty-block">
+        <p>You haven't purchased any notes or PYQs yet.</p>
+        <a href="index.html#catalog">Browse the catalog →</a>
+      </div>`}
+
+    <div class="section-title">Quick Links</div>
+    <div class="quick-grid">
+      <div class="quick-card">
+        <h5>PYQ Folders</h5>
+        <p>Browse previous-year questions by course, subject, and semester.</p>
+        <a href="index.html#pyq">Open PYQ Folders →</a>
+      </div>
+      <div class="quick-card">
+        <h5>Free NEP 2020 Guide</h5>
+        <p>Quick-reference syllabus guide, free for every student.</p>
+        <a href="index.html#catalog">View in Catalog →</a>
+      </div>
+      <div class="quick-card">
+        <h5>Need Help?</h5>
+        <p>Message us on WhatsApp for support or a refund request.</p>
+        <a href="https://wa.me/">Chat on WhatsApp →</a>
+      </div>
+    </div>
+  `;
+}
+
+render();
+</script>
+
+</body>
+</html>
